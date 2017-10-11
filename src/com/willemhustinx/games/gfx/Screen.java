@@ -14,4 +14,10 @@ public class Screen {
 
         pixels = new int[w * h];
     }
+
+    public void clear(int color) {
+        for (int i = 0; i < pixels.length; i++){
+            pixels[i] = color;
+        }
+    }
 }
