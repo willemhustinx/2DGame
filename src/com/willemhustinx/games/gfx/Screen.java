@@ -26,8 +26,8 @@ public class Screen {
 
     public void render(int xp, int yp, int tile, int colors, int bits) {
 
-        int xTile = tile % 32;
-        int yTile = tile / 32;
+        int xTile = tile % 26;
+        int yTile = tile / 26;
         int toffs = xTile * 8 + yTile * 8 * sheet.width;
 
         for (int y = 0; y < 8; y++) {

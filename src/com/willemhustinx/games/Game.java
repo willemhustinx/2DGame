@@ -156,7 +156,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         try {
-            screen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/resources/icons.png"))));
+            screen = new Screen(WIDTH, HEIGHT, new SpriteSheet(ImageIO.read(Game.class.getResourceAsStream("/resources/font.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

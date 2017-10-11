@@ -38,11 +38,22 @@ public class TitleMenu extends Menu {
 
         screen.clear(0);
 
+        int h = 2;
+        int w = 10;
+        int titleColor = Color.get(0, 010, 131, 551);
+        int xo = (screen.w - w * 8) / 2;
+        int yo = 24;
+        for(int y = 0; y < h; y++){
+            for(int x = 0; x < w; x++){
+                screen.render(xo + x * 8, yo + y * 8, x + (y + 3) * 26, titleColor,0 );
+            }
+        }
+
         for(int i = 0; i < options.length; i++) {
             String msg = options[i];
             int col = Color.get(0, 222, 222, 222);
             if (i == selected) {
-                msg = "AA " + msg + " AA";
+                msg = "[ " + msg + " ]";
                 col = Color.get(0, 555, 555, 555);
             }
             Font.draw(msg, screen, (screen.w - msg.length() * 8) / 2, (8 + i) * 8, col);
