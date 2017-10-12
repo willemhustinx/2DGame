@@ -1,4 +1,4 @@
-package com.willemhustinx.games.Screen;
+package com.willemhustinx.games.screen;
 
 import com.willemhustinx.games.Game;
 import com.willemhustinx.games.InputHandler;

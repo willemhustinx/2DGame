@@ -5,15 +5,15 @@ package com.willemhustinx.games.gfx;
  */
 public class Font {
     private static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                    "abcdefghijklmnopqrstuvwxyz" +
-                                    "[]";
+            "abcdefghijklmnopqrstuvwxyz" +
+            "[]";
 
     public static void draw(String msg, Screen screen, int x, int y, int col) {
         msg = msg.toUpperCase();
         for (int i = 0; i < msg.length(); i++) {
             int ix = chars.indexOf(msg.charAt(i));
             if (ix >= 0) {
-                screen.render(x + i * 8, y , ix, col, 0);
+                screen.render(x + i * 8, y, ix, col, 0);
             }
         }
     }

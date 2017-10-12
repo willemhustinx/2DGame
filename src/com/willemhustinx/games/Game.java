@@ -1,12 +1,13 @@
 package com.willemhustinx.games;
 
-import com.willemhustinx.games.Screen.Menu;
-import com.willemhustinx.games.Screen.TitleMenu;
 import com.willemhustinx.games.gfx.Screen;
 import com.willemhustinx.games.gfx.SpriteSheet;
+import com.willemhustinx.games.screen.Menu;
+import com.willemhustinx.games.screen.TitleMenu;
+import com.willemhustinx.games.world.Level;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -15,25 +16,41 @@ import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
-    private static final String NAME = "WILLEM'S 2D GAME";
     public static final int HEIGHT = 200;
     public static final int WIDTH = 267;
     public static final int SCALE = 3;
-
+    private static final String NAME = "WILLEM'S 2D GAME";
+    public Menu menu;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private boolean running = false;
     private Screen screen;
     private InputHandler input = new InputHandler(this);
-
     private int[] colors = new int[256];
     private int tickCount = 0;
+    private Level level;
 
-    public Menu menu;
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 
-    public void setMenu(Menu menu){
+        JFrame frame = new JFrame(Game.NAME);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.add(game, BorderLayout.CENTER);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        game.start();
+    }
+
+    public void setMenu(Menu menu) {
         this.menu = menu;
-        if(menu != null){
+        if (menu != null) {
             menu.init(this, input);
         }
     }
@@ -90,11 +107,13 @@ public class Game extends Canvas implements Runnable {
 
     private void render() {
         BufferStrategy bs = getBufferStrategy();
-        if(bs == null) {
+        if (bs == null) {
             createBufferStrategy(3);
             requestFocus();
             return;
         }
+
+        level.renderBackground(screen, 0, 0);
 
         if (menu != null) {
             menu.render(screen);
@@ -103,12 +122,12 @@ public class Game extends Canvas implements Runnable {
         for (int y = 0; y < screen.h; y++) {
             for (int x = 0; x < screen.w; x++) {
                 int cc = screen.pixels[x + y * screen.w];
-                if(cc < 255) pixels[x + y * WIDTH] = colors[cc];
+                if (cc < 255) pixels[x + y * WIDTH] = colors[cc];
             }
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.fillRect(0,0, getWidth(), getHeight());
+        g.fillRect(0, 0, getWidth(), getHeight());
 
         int ww = WIDTH * 3;
         int hh = HEIGHT * 3;
@@ -122,18 +141,22 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         tickCount++;
 
-        if(!hasFocus()){
+        if (!hasFocus()) {
             input.releaseAll();
         } else {
 
             input.tick();
 
-            if(menu != null){
+            if (menu != null) {
                 menu.tick();
             } else {
-
+                level.tick();
             }
         }
+    }
+
+    public void resetGame() {
+        level = new Level(50, 50);
     }
 
     private void init() {
@@ -161,25 +184,8 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
 
+        resetGame();
         setMenu(new TitleMenu());
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-        game.setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-        game.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-
-        JFrame frame = new JFrame(Game.NAME);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.add(game, BorderLayout.CENTER);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        game.start();
     }
 
 
