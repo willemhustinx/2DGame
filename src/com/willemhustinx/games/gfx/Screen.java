@@ -5,7 +5,8 @@ package com.willemhustinx.games.gfx;
  */
 public class Screen {
 
-    public final int w, h;
+    public final int w;
+    public final int h;
     public int[] pixels;
 
     private SpriteSheet sheet;

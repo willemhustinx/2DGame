@@ -18,10 +18,10 @@ public class Menu {
     }
 
     public void tick() {
-
+        //Do Nothing
     }
 
     public void render(Screen screen) {
-
+        //Do Nothing
     }
 }

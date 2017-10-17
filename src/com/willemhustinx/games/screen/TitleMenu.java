@@ -12,9 +12,10 @@ public class TitleMenu extends Menu {
     private int selected = 0;
 
     public TitleMenu() {
-
+        //Doe niks
     }
 
+    @Override
     public void tick() {
         if (input.up.clicked) {
             selected--;
@@ -37,9 +38,13 @@ public class TitleMenu extends Menu {
                 game.resetGame();
                 game.setMenu(null);
             }
+            if(selected == 1) {
+
+            }
         }
     }
 
+    @Override
     public void render(Screen screen) {
 
         screen.clear(0);

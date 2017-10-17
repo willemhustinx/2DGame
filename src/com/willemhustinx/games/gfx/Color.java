@@ -12,7 +12,7 @@ public class Color {
                 (a);
     }
 
-    public static int get(int d) {
+    private static int get(int d) {
         if (d < 0) {
             return 255;
         }

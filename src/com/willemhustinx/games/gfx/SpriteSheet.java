@@ -6,7 +6,8 @@ import java.awt.image.BufferedImage;
  * Created by willemhustinx on 11-10-2017.
  */
 public class SpriteSheet {
-    public int width, height;
+    public int width;
+    public int height;
     public int[] pixels;
 
     public SpriteSheet(BufferedImage image) {
