@@ -38,7 +38,7 @@ public class TitleMenu extends Menu {
                 game.resetGame();
                 game.setMenu(null);
             }
-            if(selected == 1) {
+            if (selected == 1) {
 
             }
         }

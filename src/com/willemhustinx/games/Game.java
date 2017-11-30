@@ -1,5 +1,6 @@
 package com.willemhustinx.games;
 
+import com.willemhustinx.games.entity.mob.Player;
 import com.willemhustinx.games.gfx.Screen;
 import com.willemhustinx.games.gfx.SpriteSheet;
 import com.willemhustinx.games.screen.Menu;
@@ -21,6 +22,7 @@ public class Game extends Canvas implements Runnable {
     public static final int SCALE = 3;
     private static final String NAME = "WILLEM'S 2D GAME";
     public Menu menu;
+    public Player player;
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     private boolean running = false;
@@ -114,6 +116,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         level.renderBackground(screen, 0, 0);
+        player.render(screen);
 
         if (menu != null) {
             menu.render(screen);
@@ -156,7 +159,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void resetGame() {
-        level = new Level(50, 50);
+
+        level = new Level(10, 10);
+        player = new Player(this, input);
+
+        level.add(player);
     }
 
     private void init() {
